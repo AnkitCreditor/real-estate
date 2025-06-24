@@ -33,6 +33,25 @@
   </div>
 </header>
 
+<!-- Chatbot Toggle Button -->
+  <div id="chat-icon"><i class="fas fa-comment-dots"></i></div>
+
+
+  <!-- Chat Window -->
+  <div class="chatbot-box" id="chatbotBox">
+    <div class="chat-header">
+      <i class="fas fa-house-chimney"></i>
+      <span id="restartBot" title="Restart Chat"><i class="fas fa-rotate-right"></i></span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="bot-message">Hi! 👋 How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
 
 <!-- Hero Slideshow Section -->
 <section class="hero-slider">
