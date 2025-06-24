@@ -128,7 +128,6 @@ body {
   pointer-events: none;
 }
 
-
 .hero-content {
   position: absolute;
   z-index: 2;
@@ -1764,5 +1763,78 @@ body {
 }
 #restartBot:hover {
   transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .chatbot-box {
+    width: 90%;
+    right: 5%;
+    bottom: 80px;
+    max-height: 80vh;
+  }
+
+  .chat-body {
+    max-height: 50vh;
+    padding: 10px;
+  }
+
+  .chat-input input {
+    font-size: 14px;
+  }
+
+  .chat-input button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .bot-message, .user-message {
+    font-size: 14px;
+    max-width: 100%;
+  }
+
+  #chat-icon {
+    bottom: 20px;
+    right: 20px;
+    padding: 14px;
+  }
+
+  #chat-icon i {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatbot-box {
+    width: 95%;
+    right: 2.5%;
+    bottom: 70px;
+    max-height: 85vh;
+  }
+
+  .chat-header {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .chat-body {
+    max-height: 60vh;
+  }
+
+  .chat-input input {
+    padding: 8px;
+  }
+
+  .chat-input button {
+    padding: 8px 12px;
+  }
+
+  .bot-message button {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  #restartBot {
+    font-size: 16px;
+  }
 }
 

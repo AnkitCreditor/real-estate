@@ -33,6 +33,26 @@
   </div>
 </header>
 
+<!-- Chatbot Toggle Button -->
+  <div id="chat-icon"><i class="fas fa-comment-dots"></i></div>
+
+
+  <!-- Chat Window -->
+  <div class="chatbot-box" id="chatbotBox">
+    <div class="chat-header">
+      <i class="fas fa-house-chimney"></i>
+      <span id="restartBot" title="Restart Chat"><i class="fas fa-rotate-right"></i></span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="bot-message">Hi! 👋 How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
 <!-- HERO BANNER: Properties Page -->
 <section class="properties-hero">
   <div class="overlay"></div>
@@ -290,10 +310,10 @@
     <div class="footer-col">
       <h4>Quick Links</h4>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Our Agents</a></li>
-        <li><a href="#">Featured Listings</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#agents">Our Agents</a></li>
+        <li><a href="terms.html">Terms and Conditions</a></li>
+        <li><a href="privacy-policy.html">Privacy and Policy</a></li>
       </ul>
     </div>
 
@@ -324,14 +344,7 @@
   </div>
 </footer>
 
-<script>
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.querySelector('.nav-links');
-
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('show');
-  });
-</script>
+<script src="js/main.js"></script>
 
 </body>
 </html>

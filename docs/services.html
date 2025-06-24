@@ -33,6 +33,26 @@
   </div>
 </header>
 
+<!-- Chatbot Toggle Button -->
+  <div id="chat-icon"><i class="fas fa-comment-dots"></i></div>
+
+
+  <!-- Chat Window -->
+  <div class="chatbot-box" id="chatbotBox">
+    <div class="chat-header">
+      <i class="fas fa-house-chimney"></i>
+      <span id="restartBot" title="Restart Chat"><i class="fas fa-rotate-right"></i></span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="bot-message">Hi! 👋 How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
 <section class="services-hero">
   <div class="overlay"></div>
   <div class="hero-content container">
@@ -90,7 +110,9 @@
     <div class="cta-text">
       <h2>Book a Private Consultation</h2>
       <p>Let our experts tailor a real estate strategy that fits your goals, lifestyle, and legacy.</p>
-      <a href="contact.html" class="cta-btn">Schedule Now</a>
+      <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+      <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+      <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/ankit-creditoracademy/30min'});return false;" class="cta-btn">Schedule Now</a>
     </div>
   </div>
 </section>
@@ -214,10 +236,10 @@
     <div class="footer-col">
       <h4>Quick Links</h4>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Our Agents</a></li>
-        <li><a href="#">Featured Listings</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#agents">Our Agents</a></li>
+        <li><a href="terms.html">Terms and Conditions</a></li>
+        <li><a href="privacy-policy.html">Privacy and Policy</a></li>
       </ul>
     </div>
 
@@ -248,14 +270,7 @@
   </div>
 </footer>
 
-<script>
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.querySelector('.nav-links');
-
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('show');
-  });
-</script>
+<script src="js/main.js"></script>
 
 </body>
 </html>
