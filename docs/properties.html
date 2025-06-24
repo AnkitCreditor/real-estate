@@ -13,13 +13,20 @@
 <header class="floating-header">
   <div class="container nav-wrapper">
     <div class="logo">Luxury<span>Estates</span></div>
+
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
     <nav class="nav">
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="properties.html">Properties</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="services.html">Services</a></li>
-        <li><a href="index.html#contact" class="nav-contact-btn">Contact</a></li>
+        <li><a href="#contact" class="nav-contact-btn">Contact</a></li>
       </ul>
     </nav>
   </div>
@@ -315,6 +322,15 @@
     <p>&copy; 2025 LuxEstates. All rights reserved. | Designed with style and class.</p>
   </div>
 </footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.querySelector('.nav-links');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+  });
+</script>
 
 </body>
 </html>
