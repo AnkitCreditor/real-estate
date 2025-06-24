@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Properties | Real Estate</title>
+    <link rel="stylesheet" href="css/my-properties.css">
+</head>
+<body>
+    <div class="properties-container">
+        <aside class="sidebar">
+            <h2>Real Estate</h2>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="my-properties.html" class="active">My Properties</a></li>
+                    <li><a href="#">Saved Listings</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="properties-main">
+            <header class="properties-header">
+                <h1>My Properties</h1>
+            </header>
+            <section class="buyed-properties">
+                <h2>Buyed Properties</h2>
+                <div class="property-list">
+                    <div class="property-card">
+                        <img src="images/properties/beachsidevilla.jpg" alt="Beachside Villa">
+                        <div class="property-info">
+                            <h3>Beachside Villa</h3>
+                            <p>Miami, FL</p>
+                            <span class="status bought">Bought</span>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <img src="images/properties/lakeview.jpg" alt="Lakeview Apartment">
+                        <div class="property-info">
+                            <h3>Lakeview Apartment</h3>
+                            <p>Chicago, IL</p>
+                            <span class="status bought">Bought</span>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <img src="images/properties/urbanhome.jpg" alt="Urban Home">
+                        <div class="property-info">
+                            <h3>Urban Home</h3>
+                            <p>New York, NY</p>
+                            <span class="status bought">Bought</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="sell-properties">
+                <h2>Sell Properties</h2>
+                <form class="sell-form">
+                    <div class="form-group">
+                        <label for="propertyTitle">Property Title</label>
+                        <input type="text" id="propertyTitle" name="propertyTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyLocation">Location</label>
+                        <input type="text" id="propertyLocation" name="propertyLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyPrice">Price</label>
+                        <input type="number" id="propertyPrice" name="propertyPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyDescription">Description</label>
+                        <textarea id="propertyDescription" name="propertyDescription" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyImages">Upload Images</label>
+                        <input type="file" id="propertyImages" name="propertyImages" accept="image/*" multiple required>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Property</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html> 

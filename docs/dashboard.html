@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Luxary Estate</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>Real Estate</h2>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="my-properties.html">My Properties</a></li>
+                    <li><a href="#">Saved Listings</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="dashboard-header">
+                <h1>Dashboard</h1>
+                <div class="user-info">
+                    <span>Welcome, Username</span>
+                    <img src="images/client.jpg" alt="User" class="user-avatar">
+                </div>
+            </header>
+            <section class="dashboard-cards">
+                <div class="card">
+                    <h3>My Properties</h3>
+                    <p>3</p>
+                </div>
+                <div class="card">
+                    <h3>Saved Listings</h3>
+                    <p>7</p>
+                </div>
+                <div class="card">
+                    <h3>Upcoming Tours</h3>
+                    <p>2</p>
+                </div>
+                <a href="profile.html" class="card" style="text-decoration:none;cursor:pointer;">
+                    <h3>Edit Profile</h3>
+                    <p style="color:#d4af37;text-decoration:underline;font-size:1rem;">Go to Profile</p>
+                </a>
+            </section>
+            <section class="dashboard-table">
+                <h2>My Recent Properties</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Beachside Villa</td>
+                            <td>Miami</td>
+                            <td>Active</td>
+                            <td>$2,500,000</td>
+                        </tr>
+                        <tr>
+                            <td>Lakeview Apartment</td>
+                            <td>Chicago</td>
+                            <td>Sold</td>
+                            <td>$950,000</td>
+                        </tr>
+                        <tr>
+                            <td>Urban Home</td>
+                            <td>New York</td>
+                            <td>Active</td>
+                            <td>$1,200,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html> 

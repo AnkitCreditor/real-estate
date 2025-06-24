@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings | Real Estate</title>
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+    <div class="profile-container">
+        <aside class="sidebar">
+            <h2>Real Estate</h2>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="my-properties.html">My Properties</a></li>
+                    <li><a href="#">Saved Listings</a></li>
+                    <li><a href="profile.html" class="active">Profile</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="profile-main">
+            <header class="profile-header">
+                <h1>Profile Settings</h1>
+            </header>
+            <section class="profile-settings">
+                <form class="profile-form">
+                    <div class="profile-pic-section">
+                        <img src="images/client.jpg" alt="Profile Picture" class="profile-pic" id="profilePic">
+                        <div class="pic-actions">
+                            <label for="uploadPic" class="upload-btn">Change Photo</label>
+                            <input type="file" id="uploadPic" style="display:none;">
+                            <button type="button" class="remove-btn" id="removePic">Remove</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="user@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" value="+1234567890">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" value="">
+                    </div>
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script>
+        // Remove profile picture functionality (demo only)
+        document.getElementById('removePic').onclick = function() {
+            document.getElementById('profilePic').src = 'images/icons/trusted.jpg';
+        };
+    </script>
+</body>
+</html> 
