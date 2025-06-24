@@ -26,8 +26,8 @@
 
         <!-- Login Form -->
         <form id="loginForm" class="form active-form">
-          <input type="text" placeholder="User ID / Email" required />
-          <input type="password" placeholder="Password" required />
+          <input type="text" id="loginEmail" placeholder="User ID / Email" required />
+          <input type="password" id="loginPassword" placeholder="Password" required />
           <div class="forgot">Forgot Password?</div>
           <button type="submit" class="animated-btn">Login</button>
           <p class="switch-msg">Don't have an account? <span id="toSignup">Signup</span></p>
@@ -36,18 +36,17 @@
         <!-- Signup Form -->
         <form id="signupForm" class="form">
           <div class="name-group">
-            <input type="text" placeholder="First Name" required />
-            <input type="text" placeholder="Last Name" required />
+            <input type="text" id="firstName" placeholder="First Name" required />
+            <input type="text" id="lastName" placeholder="Last Name" required />
           </div>
-          <input type="email" placeholder="Email" required />
-          <input type="tel" placeholder="Phone Number" required />
+          <input type="email" id="signupEmail" placeholder="Email" required />
+          <input type="tel" id="phone" placeholder="Phone Number" required />
           <div class="custom-date">
             <input type="date" id="dob" required />
             <span class="fake-placeholder">Date of Birth</span>
           </div>
-
-          <input type="password" id="password" placeholder="Password" required />
-          <input type="password" placeholder="Confirm Password" required />
+          <input type="password" id="signupPassword" placeholder="Password" required />
+          <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
           <p id="passwordMsg"></p>
           <button type="submit" class="animated-btn">Signup</button>
           <p class="switch-msg">Already have an account? <span id="toLogin">Login</span></p>
@@ -64,59 +63,132 @@
     const toSignup = document.getElementById('toSignup');
     const toLogin = document.getElementById('toLogin');
     const slogan = document.getElementById('slogan');
-    const passwordInput = document.getElementById('password');
+    const passwordInput = document.getElementById('signupPassword');
     const passwordMsg = document.getElementById('passwordMsg');
 
     const slogans = [
-    "Empowering Private Commerce...",
-    "Your Gateway to Sovereignty...",
-    "Secure, Smart, Private..."
+      "Empowering Private Commerce...",
+      "Your Gateway to Sovereignty...",
+      "Secure, Smart, Private..."
     ];
 
     let sloganIndex = 0;
     let charIndex = 0;
 
     function typeSlogan() {
-    if (charIndex < slogans[sloganIndex].length) {
+      if (charIndex < slogans[sloganIndex].length) {
         slogan.textContent += slogans[sloganIndex].charAt(charIndex);
         charIndex++;
         setTimeout(typeSlogan, 100);
-    } else {
+      } else {
         setTimeout(() => {
-        slogan.textContent = '';
-        charIndex = 0;
-        sloganIndex = (sloganIndex + 1) % slogans.length;
-        typeSlogan();
+          slogan.textContent = '';
+          charIndex = 0;
+          sloganIndex = (sloganIndex + 1) % slogans.length;
+          typeSlogan();
         }, 2000);
-    }
+      }
     }
     typeSlogan();
 
-    // Form toggles
     loginBtn.addEventListener('click', () => {
-    loginBtn.classList.add('active');
-    signupBtn.classList.remove('active');
-    loginForm.classList.add('active-form');
-    signupForm.classList.remove('active-form');
+      loginBtn.classList.add('active');
+      signupBtn.classList.remove('active');
+      loginForm.classList.add('active-form');
+      signupForm.classList.remove('active-form');
     });
 
     signupBtn.addEventListener('click', () => {
-    signupBtn.classList.add('active');
-    loginBtn.classList.remove('active');
-    signupForm.classList.add('active-form');
-    loginForm.classList.remove('active-form');
+      signupBtn.classList.add('active');
+      loginBtn.classList.remove('active');
+      signupForm.classList.add('active-form');
+      loginForm.classList.remove('active-form');
     });
 
     toSignup.addEventListener('click', () => signupBtn.click());
     toLogin.addEventListener('click', () => loginBtn.click());
 
-    // Password Strength Validator
     passwordInput?.addEventListener('input', () => {
-    const value = passwordInput.value;
-    const isStrong = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(value);
-    passwordMsg.textContent = isStrong ? '' : "Password must be at least 8 characters, include upper, lower, number & symbol.";
+      const value = passwordInput.value;
+      const isStrong = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(value);
+      passwordMsg.textContent = isStrong ? '' : "Password must be at least 8 characters, include upper, lower, number & symbol.";
     });
 
+    // ---------------------
+    // 🔗 BACKEND CONNECTION
+    // ---------------------
+
+    const BASE_URL = "http://localhost:8000/api/auth"; // change to your real backend URL
+
+    // Handle login
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const res = await fetch(`${BASE_URL}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.message || "Login failed");
+
+        // Save token & redirect
+        localStorage.setItem("token", data.token);
+        alert("Login successful!");
+        window.location.href = "dashboard.html"; // or your actual dashboard
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    // Handle signup
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+      const email = document.getElementById("signupEmail").value;
+      const phone = document.getElementById("phone").value;
+      const dob = document.getElementById("dob").value;
+      const password = document.getElementById("signupPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${BASE_URL}/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            contactNumber: phone,
+            dob,
+            password,
+            confirmPassword
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.message || "Signup failed");
+
+        alert("Signup successful! Please log in.");
+        loginBtn.click();
+      } catch (err) {
+        alert(err.message);
+      }
+    });
   </script>
 </body>
 </html>
