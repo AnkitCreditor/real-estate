@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard | LuxuryEstate</title>
+  <link rel="stylesheet" href="css/admin_dashboard.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Hamburger for mobile -->
+  <button class="hamburger" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">Lux<span>Admin</span></div>
+      <ul class="menu">
+        <li class="active"><i class="fas fa-chart-pie"></i> Dashboard</li>
+        <li><i class="fas fa-building"></i> Properties</li>
+        <li><i class="fas fa-users"></i> Clients</li>
+        <li><i class="fas fa-wallet"></i> Transactions</li>
+        <li><i class="fas fa-user-cog"></i> Account</li>
+        <li>
+            <a href="index.html" class="menu-link">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </li>
+
+      </ul>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main section active" id="dashboard-section">
+      <header class="dashboard-header">
+        <h1>Dashboard Overview</h1>
+        <div class="admin-user">
+          <i class="fas fa-user-circle"></i>
+        </div>
+      </header>
+
+      <!-- Stats -->
+      <section class="stats-grid">
+        <div class="card">
+          <h4>Properties Managed</h4>
+          <h2>4,860</h2>
+        </div>
+        <div class="card">
+          <h4>Total Asset Value</h4>
+          <h2>$2.0B</h2>
+        </div>
+        <div class="card">
+          <h4>Properties Sold</h4>
+          <h2>1,037</h2>
+        </div>
+        <div class="card">
+          <h4>New Clients</h4>
+          <h2>895</h2>
+        </div>
+      </section>
+
+      <!-- Charts -->
+      <section class="charts-row">
+        <div class="chart-box">
+          <h3>Revenue Generation</h3>
+          <canvas id="revenueChart"></canvas>
+        </div>
+        <div class="graph-box">
+          <h3>Status Analysis</h3>
+          <canvas id="myPieChart"></canvas>
+        </div>
+      </section>
+
+      <!-- Property Cards -->
+      <section class="properties-grid">
+        <h3>Explore Your Properties</h3>
+        <div class="property-cards">
+          <div class="property-card">
+            <img src="images/property1.jpg" alt="Property 1">
+            <div class="info">
+              <h4>Sunset Villa</h4>
+              <p>Malibu, CA</p>
+              <span>$7,548</span>
+            </div>
+          </div>
+          <!-- Add more property cards as needed -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Properties Section -->
+<main class="main section hidden" id="properties-section">
+  <h2 class="section-title">Manage Properties</h2>
+  <p class="section-subtitle">List, update, and organize your property portfolio.</p>
+
+  <div class="property-management-grid">
+    <!-- Property Card 1 -->
+    <div class="property-card manage">
+      <img src="images/property1.jpg" alt="Property Image" />
+      <div class="info">
+        <h4>Sunset Villa</h4>
+        <p>Malibu, California</p>
+        <span>$7,548,000</span>
+        <div class="actions">
+          <button class="edit-btn"><i class="fas fa-edit"></i> Edit</button>
+          <button class="delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Property Card 2 -->
+    <div class="property-card manage">
+      <img src="images/property2.jpg" alt="Property Image" />
+      <div class="info">
+        <h4>Oceanfront Estate</h4>
+        <p>Miami, Florida</p>
+        <span>$5,120,000</span>
+        <div class="actions">
+          <button class="edit-btn"><i class="fas fa-edit"></i> Edit</button>
+          <button class="delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Property Card 3 -->
+    <div class="property-card manage">
+      <img src="images/property3.jpg" alt="Property Image" />
+      <div class="info">
+        <h4>Skyline Penthouse</h4>
+        <p>New York, NY</p>
+        <span>$12,300,000</span>
+        <div class="actions">
+          <button class="edit-btn"><i class="fas fa-edit"></i> Edit</button>
+          <button class="delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main class="main section hidden" id="clients-section">
+  <h2 class="section-title">Client Overview</h2>
+  <p class="section-subtitle">Track new leads, active buyers, and client profiles.</p>
+
+  <div class="client-grid">
+    <!-- Client 1 -->
+    <div class="client-card">
+      <div class="client-content">
+        <div class="client-top">
+          <div class="client-avatar">
+            <img src="images/client1.jpg" alt="Client Image">
+          </div>
+          <div class="client-info">
+            <h4>Emma Carter</h4>
+            <p>Premium Buyer • San Diego, CA</p>
+            <span>Email: emma@example.com</span>
+            <span>Phone: (555) 987-6543</span>
+          </div>
+        </div>
+        <button class="view-btn" onclick="toggleClientDetails(this)">View</button>
+      </div>
+    </div>
+    <div class="client-detail hidden">
+      <p><strong>Preferred Property Type:</strong> Beachfront Villa</p>
+      <p><strong>Budget:</strong> $8M - $10M</p>
+      <p><strong>Notes:</strong> Looking for privacy, high-end interiors, and private beach access.</p>
+    </div>
+
+    <!-- Client 2 -->
+    <div class="client-card">
+      <div class="client-content">
+        <div class="client-top">
+          <div class="client-avatar">
+            <img src="images/client2.jpg" alt="Client Image">
+          </div>
+          <div class="client-info">
+            <h4>James Thompson</h4>
+            <p>Investor • Austin, TX</p>
+            <span>Email: james@example.com</span>
+            <span>Phone: (555) 123-4567</span>
+          </div>
+        </div>
+        <button class="view-btn" onclick="toggleClientDetails(this)">View</button>
+      </div>
+    </div>
+    <div class="client-detail hidden">
+      <p><strong>Portfolio Size:</strong> 12 Properties</p>
+      <p><strong>Investment Focus:</strong> Luxury rentals & commercial estates</p>
+      <p><strong>Notes:</strong> Interested in coastal metro markets with high rental ROI.</p>
+    </div>
+
+    <!-- Client 3 -->
+    <div class="client-card">
+      <div class="client-content">
+        <div class="client-top">
+          <div class="client-avatar">
+            <img src="images/client3.jpg" alt="Client Image">
+          </div>
+          <div class="client-info">
+            <h4>Sophia Lee</h4>
+            <p>First-time Buyer • Seattle, WA</p>
+            <span>Email: sophia@example.com</span>
+            <span>Phone: (555) 765-4321</span>
+          </div>
+        </div>
+        <button class="view-btn" onclick="toggleClientDetails(this)">View</button>
+      </div>
+    </div>
+    <div class="client-detail hidden">
+      <p><strong>Looking For:</strong> Modern 2BHK condo</p>
+      <p><strong>Budget:</strong> $500k - $800k</p>
+      <p><strong>Notes:</strong> Prefers high-rise buildings near downtown with gym and security.</p>
+    </div>
+  </div>
+</main>
+
+<main class="main section hidden" id="transactions-section">
+  <h2 class="section-title">Transaction History</h2>
+  <p class="section-subtitle">Review recent payments, invoices, and billing activity.</p>
+
+  <!-- Summary Cards -->
+  <section class="stats-grid">
+    <div class="card">
+      <h4>Total Revenue</h4>
+      <h2>$1,250,000</h2>
+    </div>
+    <div class="card">
+      <h4>Expenses</h4>
+      <h2>$420,000</h2>
+    </div>
+    <div class="card">
+      <h4>Pending Invoices</h4>
+      <h2>$85,000</h2>
+    </div>
+    <div class="card">
+      <h4>Successful Payments</h4>
+      <h2>1,228</h2>
+    </div>
+  </section>
+
+  <!-- Chart -->
+  <section class="charts-row">
+    <div class="chart-box">
+      <h3>Monthly Revenue vs Expense</h3>
+      <canvas id="transactionChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Transactions Table -->
+  <section class="table-section">
+    <h3>Recent Transactions</h3>
+    <div class="table-wrapper">
+      <table class="transaction-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Client</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>June 24, 2025</td>
+            <td>Emma Carter</td>
+            <td>$1,200,000</td>
+            <td><span class="status success">Paid</span></td>
+            <td>Property Sale</td>
+          </tr>
+          <tr>
+            <td>June 22, 2025</td>
+            <td>James Thompson</td>
+            <td>$300,000</td>
+            <td><span class="status pending">Pending</span></td>
+            <td>Deposit</td>
+          </tr>
+          <tr>
+            <td>June 19, 2025</td>
+            <td>Sophia Lee</td>
+            <td>$560,000</td>
+            <td><span class="status success">Paid</span></td>
+            <td>Full Payment</td>
+          </tr>
+          <tr>
+            <td>June 17, 2025</td>
+            <td>Lucas Park</td>
+            <td>$125,000</td>
+            <td><span class="status failed">Failed</span></td>
+            <td>Installment</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+
+<main class="main section hidden" id="account-section">
+  <!-- Banner with image upload -->
+  <div class="account-banner">
+    <img src="images/388460207_901f0c69-06d5-46d0-a2bd-c524183e039a.jpg" alt="Banner" id="banner-preview">
+    <label for="banner-upload" class="upload-banner-icon">
+      <i class="fas fa-camera"></i>
+    </label>
+    <input type="file" id="banner-upload" accept="image/*" style="display: none" />
+  </div>
+
+  <!-- Profile area -->
+  <div class="account-profile">
+    <div class="avatar-container">
+      <div class="profile-img-wrapper">
+        <img src="images/client.jpg" alt="Profile Picture" class="profile-img" id="profile-preview">
+        <label for="profile-upload" class="upload-profile-icon">
+          <i class="fas fa-camera"></i>
+        </label>
+        <input type="file" id="profile-upload" accept="image/*" style="display: none" />
+      </div>
+
+      <div class="edit-container">
+        <button class="edit-btn" onclick="enableAccountEdit()">Edit</button>
+      </div>
+    </div>
+
+    <!-- Account Details Form -->
+    <form class="account-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" value="Ankit Kumar" disabled>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" value="ankit@example.com" disabled readonly>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" value="+91 9876543210" disabled>
+      </div>
+      <div class="form-group">
+        <label for="password">Change Password</label>
+        <input type="password" id="password" placeholder="••••••••" disabled>
+      </div>
+      <div class="form-group">
+        <label for="bio">Short Bio</label>
+        <textarea id="bio" rows="3" disabled>Real estate specialist focusing on luxury properties and premium client experience.</textarea>
+      </div>
+
+      <button type="submit" class="save-btn hidden">Save Changes</button>
+    </form>
+  </div>
+</main>
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
+    const menuItems = document.querySelectorAll(".menu li");
+    const sections = {
+      "Dashboard": document.getElementById("dashboard-section"),
+      "Properties": document.getElementById("properties-section"),
+      "Clients": document.getElementById("clients-section"),
+      "Transactions": document.getElementById("transactions-section"),
+      "Account": document.getElementById("account-section")
+    };
+
+    menuItems.forEach(item => {
+      item.addEventListener("click", () => {
+        // Active highlight
+        menuItems.forEach(i => i.classList.remove("active"));
+        item.classList.add("active");
+
+        // Section toggle
+        Object.values(sections).forEach(sec => sec.classList.add("hidden"));
+        const name = item.textContent.trim();
+        if (sections[name]) {
+          sections[name].classList.remove("hidden");
+          sections[name].classList.add("active");
+        }
+
+        // Auto scroll to top
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    
+  </script>
+  <script src="js/dashboard_admin.js"></script>
+</body>
+</html>

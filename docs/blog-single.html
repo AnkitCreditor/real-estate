@@ -1,0 +1,323 @@
+<!-- blog-single.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog Post | LuxuryEstate</title>
+  <link rel="stylesheet" href="css/blog-single.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- Floating Header -->
+<header class="floating-header">
+  <div class="container nav-wrapper">
+    <div class="logo">Luxury<span>Estates</span></div>
+
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="properties.html">Properties</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="login.html" class="nav-contact-btn">Login</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Chatbot Toggle Button -->
+<div id="chat-icon"><i class="fas fa-comment-dots"></i></div>
+
+<!-- Chat Window -->
+<div class="chatbot-box" id="chatbotBox">
+  <div class="chat-header">
+    <i class="fas fa-house-chimney"></i>
+    <span id="restartBot" title="Restart Chat"><i class="fas fa-rotate-right"></i></span>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="bot-message">Hi! 👋 How can I help you today?</div>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="single-blog-hero">
+  <div class="overlay"></div>
+  <div class="hero-content">
+    <!-- Title and category will be set via JS -->
+    <h1 id="blogTitle">Loading...</h1>
+    <p id="blogCategory">Category</p>
+  </div>
+</section>
+
+<!-- Article Content -->
+<div class="container">
+  <!-- Breadcrumb (optional) -->
+  <nav class="breadcrumb" aria-label="Breadcrumb" style="margin: 50px auto 80px; max-width: 900px;">
+    <ul style="list-style: none; display: flex; gap: 5px; font-size: 14px; color: #666;">
+      <li><a href="index.html" style="color: #666; text-decoration: none;">Home</a></li>
+      <li>/</li>
+      <li><a href="blog.html" style="color: #666; text-decoration: none;">Blog</a></li>
+      <li>/</li>
+      <li id="breadcrumbTitle" style="color: #111; font-weight: 500;">Loading...</li>
+    </ul>
+  </nav>
+
+  <!-- Title Block with intro/subtitle -->
+  <section class="blog-article-title">
+    <h1 id="articleTitle">Loading...</h1>
+    <p id="articleIntro" style="color: #666; font-size: 16px; margin-top: 10px;">Subtitle or intro here...</p>
+  </section>
+
+  <!-- Featured Image -->
+  <section class="blog-content">
+    <img id="blogImage" src="" alt="Blog Image" class="featured-image"/>
+    <div id="blogBody" class="blog-body">
+      <!-- Full blog content injected here -->
+    </div>
+  </section>
+</div>
+
+<!-- Related Posts Section -->
+<section class="related-posts">
+  <h2>Latest News & Updates</h2>
+  
+  <!-- Arrows -->
+  <button class="arrow left-arrow"><i class="fas fa-chevron-left"></i></button>
+  <button class="arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+
+  <div class="related-slider" id="relatedSlider">
+    <div class="related-card">
+      <img src="images/forecast.jpg" alt="Real Estate Market Forecast">
+      <div class="card-body">
+        <h4>Real Estate Market Forecast</h4>
+        <p>Expert insights and predictions for the upcoming year.</p>
+        <a href="blog-single.html?id=blog2">Read More</a>
+      </div>
+    </div>
+    <div class="related-card">
+      <img src="images/strategy.jpg" alt="Luxury Investment Strategies">
+      <div class="card-body">
+        <h4>Luxury Investment Strategies</h4>
+        <p>Smart ways to diversify your portfolio with high-end assets.</p>
+        <a href="blog-single.html?id=blog3">Read More</a>
+      </div>
+    </div>
+    <div class="related-card">
+      <img src="images/interior.jpg" alt="Interior Design for Mansions">
+      <div class="card-body">
+        <h4>Interior Design for Mansions</h4>
+        <p>Top trends in luxury interiors for 2025.</p>
+        <a href="blog-single.html?id=blog4">Read More</a>
+      </div>
+    </div>
+    <div class="related-card">
+      <img src="images/5.jpg" alt="Top 10 Luxury Homes in 2025">
+      <div class="card-body">
+        <h4>Top 10 Luxury Homes in 2025</h4>
+        <p>Top trends in luxury homes for 2025.</p>
+        <a href="blog-single.html?id=blog1">Read More</a>
+      </div>
+    </div>
+    <div class="related-card">
+      <img src="images/properties/prop1.jpg" alt="Why Location Still Wins">
+      <div class="card-body">
+        <h4>Why Location Still Wins</h4>
+        <p>Unpacking the old real estate mantra for modern buyers.</p>
+        <a href="blog-single.html?id=blog5">Read More</a>
+      </div>
+    </div>
+  </div>
+</section>  
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <!-- Column 1: About -->
+    <div class="footer-col">
+      <h4>About LuxEstates</h4>
+      <p>We specialize in luxury real estate services across top U.S. markets, connecting buyers with exclusive listings and expert agents.</p>
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+      </div>
+    </div>
+    <!-- Column 2: Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#agents">Our Agents</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="terms.html">Terms and Conditions</a></li>
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <!-- Column 3: Services -->
+    <div class="footer-col">
+      <h4>Our Services</h4>
+      <ul>
+        <li><a href="#">Buy Property</a></li>
+        <li><a href="#">Sell Property</a></li>
+        <li><a href="#">Investments</a></li>
+        <li><a href="#">Luxury Consultations</a></li>
+      </ul>
+    </div>
+    <!-- Column 4: Newsletter -->
+    <div class="footer-col">
+      <h4>Subscribe</h4>
+      <p>Get exclusive updates on luxury listings and market insights.</p>
+      <form class="footer-subscribe">
+        <input type="email" placeholder="Your email address" required />
+        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 LuxEstates. All rights reserved. | Designed with style and class.</p>
+  </div>
+</footer>
+
+<!-- JS for dynamic content injection -->
+<script>
+  const blogPosts = {
+    blog1: {
+      title: "Top 10 Luxury Homes in 2025",
+      category: "Luxury",
+      intro: "Selling a home isn’t just about listing it—it’s about presenting it in the best possible light. Explore these top luxury homes for inspiration.",
+      image: "images/5.jpg",
+      content: `
+        <h2>1. Villa del Sol, France</h2>
+        <p>Explore the world’s finest homes—French villas with timeless elegance, combining heritage and modern comforts.</p>
+        <h2>2. The Infinity House, Malibu</h2>
+        <p>A coastal masterpiece perched on cliffs, offering panoramic ocean views and seamless indoor-outdoor living.</p>
+        <h2>3. Dubai Sky Palace</h2>
+        <p>A futuristic penthouse in the sky, with floor-to-ceiling aquariums and cutting-edge smart home features.</p>
+        <h2>4. Tokyo Floating Residence</h2>
+        <p>An architectural marvel blending minimalism and technology in the heart of a bustling metropolis.</p>
+        <p>If you’re seeking exclusivity and architectural magnificence, this collection sets the standard.</p>
+      `
+    },
+    blog2: {
+      title: "Real Estate Market Forecast",
+      category: "Trends",
+      intro: "Get ahead with expert predictions on luxury market trends shaping 2025 and beyond.",
+      image: "images/forecast.jpg",
+      content: `
+        <h2>Market Growth Predictions</h2>
+        <p>The 2025 luxury real estate market is expected to grow by 11% year-over-year, driven by high-net-worth buyers seeking global havens.</p>
+        <h2>Digital-First Listings</h2>
+        <p>AI-curated virtual tours and digital concierge services will become standard as remote investing rises.</p>
+        <h2>Emerging Hotspots</h2>
+        <p>Secondary cities and eco-friendly developments gain traction as buyers look beyond traditional hubs.</p>
+      `
+    },
+    blog3: {
+      title: "Luxury Investment Strategies",
+      category: "Investment",
+      intro: "Discover diversified strategies to invest in high-end real estate for maximum ROI and long-term security.",
+      image: "images/strategy.jpg",
+      content: `
+        <h2>Fractional Ownership</h2>
+        <p>Invest in portions of multi-million dollar properties, reducing entry costs while sharing prestige.</p>
+        <h2>High-End Rentals</h2>
+        <p>Short-term luxury rentals in prime locations can yield strong returns amid rising travel demand.</p>
+        <h2>Eco-Luxury Developments</h2>
+        <p>Sustainable estates with green certifications are increasingly valued by discerning buyers.</p>
+        <h2>International REITs</h2>
+        <p>Explore Real Estate Investment Trusts focused on luxury segments in emerging markets.</p>
+      `
+    },
+    blog4: {
+      title: "Interior Design for Mansions",
+      category: "Design",
+      intro: "Step inside the latest trends in luxury interiors: from ambient lighting to gold-accented details.",
+      image: "images/interior.jpg",
+      content: `
+        <h2>Smart Ambient Lighting</h2>
+        <p>Integrated lighting systems that adapt mood and time of day, enhancing comfort and style.</p>
+        <h2>Marble & Metallic Accents</h2>
+        <p>Seamless use of marble patterns and tasteful gold/brass trims for timeless elegance.</p>
+        <h2>Open Floor Aesthetics</h2>
+        <p>Fluid spaces connecting living, dining, and entertainment areas for grand hosting experiences.</p>
+        <h2>Curated Art & Furniture</h2>
+        <p>Custom pieces and curated art installations that tell a story and elevate ambiance.</p>
+      `
+    },
+    blog5: {
+      title: "Why Location Still Wins",
+      category: "Tips",
+      intro: "“Location, location, location” remains paramount—discover which areas promise the best ROI in 2025.",
+      image: "images/properties/prop1.jpg",
+      content: `
+        <h2>Coastal & Waterfront Properties</h2>
+        <p>Oceanfront and lakeside estates remain highly sought after for lifestyle and investment value.</p>
+        <h2>Urban vs. Suburban Trends</h2>
+        <p>Urban luxury condos see steady demand, while select suburban enclaves attract families seeking space and privacy.</p>
+        <h2>Emerging Regions</h2>
+        <p>Secondary cities with growing economic hubs are becoming new hotspots for luxury buyers.</p>
+        <h2>Amenities & Infrastructure</h2>
+        <p>Top school districts, healthcare access, and cultural offerings heavily influence property desirability.</p>
+      `
+    }
+  };
+
+  // Inject content based on URL param
+  const params = new URLSearchParams(window.location.search);
+  const blogID = params.get("id");
+  const post = blogPosts[blogID];
+
+  // Elements
+  const elTitleHero = document.getElementById("blogTitle");
+  const elCategory = document.getElementById("blogCategory");
+  const elBreadcrumbTitle = document.getElementById("breadcrumbTitle");
+  const elArticleTitle = document.getElementById("articleTitle");
+  const elArticleIntro = document.getElementById("articleIntro");
+  const elImage = document.getElementById("blogImage");
+  const elBody = document.getElementById("blogBody");
+
+  if (post) {
+    elTitleHero.textContent = post.title;
+    elCategory.textContent = post.category;
+    elBreadcrumbTitle.textContent = post.title;
+    elArticleTitle.textContent = post.title;
+    elArticleIntro.textContent = post.intro || "";
+    elImage.src = post.image;
+    elImage.alt = post.title;
+    elBody.innerHTML = post.content;
+  } else {
+    // If not found, show message
+    document.querySelector(".blog-content").innerHTML = "<p style='text-align:center; margin:40px 0;'>Blog not found.</p>";
+  }
+
+  const slider = document.getElementById('relatedSlider');
+  const leftArrow = document.querySelector('.left-arrow');
+  const rightArrow = document.querySelector('.right-arrow');
+
+  const scrollAmount = 320; // scroll roughly 1 card width + gap
+
+  leftArrow.addEventListener('click', () => {
+    slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+
+  rightArrow.addEventListener('click', () => {
+    slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
