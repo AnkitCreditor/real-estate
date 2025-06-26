@@ -18,7 +18,7 @@ const app = express();
 // 🛡️ CORS setup
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "https://real-estate-taupe-eight.vercel.app",
+    origin:"https://real-estate-taupe-eight.vercel.app",
     credentials: true,
   })
 );
