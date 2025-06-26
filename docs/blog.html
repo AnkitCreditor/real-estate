@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog | LuxuryEstate</title>
+  <link rel="stylesheet" href="css/blog.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- Floating Header -->
+<header class="floating-header">
+  <div class="container nav-wrapper">
+    <div class="logo">Luxury<span>Estates</span></div>
+
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="properties.html">Properties</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="login.html" class="nav-contact-btn">Login</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Chatbot Toggle Button -->
+  <div id="chat-icon"><i class="fas fa-comment-dots"></i></div>
+
+
+  <!-- Chat Window -->
+  <div class="chatbot-box" id="chatbotBox">
+    <div class="chat-header">
+      <i class="fas fa-house-chimney"></i>
+      <span id="restartBot" title="Restart Chat"><i class="fas fa-rotate-right"></i></span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="bot-message">Hi! 👋 How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+<!-- Hero Section -->
+<section class="blog-hero">
+  <div class="overlay"></div>
+  <div class="hero-content">
+    <h1>Our Luxury Blog</h1>
+    <p>Stay updated with the latest in luxury real estate, tips, and market trends.</p>
+  </div>
+</section>
+
+<!-- Blog Section -->
+<section class="blog-section container">
+  <div class="blog-grid" id="blogGrid">
+    <!-- Blog posts will be dynamically rendered here -->
+  </div>
+
+  <!-- Load More Button -->
+  <div class="load-more-container">
+    <button id="loadMoreBtn" class="load-more-btn">Load More</button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <!-- Column 1: About -->
+    <div class="footer-col">
+      <h4>About LuxEstates</h4>
+      <p>We specialize in luxury real estate services across top U.S. markets, connecting buyers with exclusive listings and expert agents.</p>
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+      </div>
+    </div>
+
+    <!-- Column 2: Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#agents">Our Agents</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="terms.html">Terms and Conditions</a></li>
+        <li><a href="privacy-policy.html">Privacy and Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 3: Services -->
+    <div class="footer-col">
+      <h4>Our Services</h4>
+      <ul>
+        <li><a href="#">Buy Property</a></li>
+        <li><a href="#">Sell Property</a></li>
+        <li><a href="#">Investments</a></li>
+        <li><a href="#">Luxury Consultations</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 4: Newsletter -->
+    <div class="footer-col">
+      <h4>Subscribe</h4>
+      <p>Get exclusive updates on luxury listings and market insights.</p>
+      <form class="footer-subscribe">
+        <input type="email" placeholder="Your email address" required />
+        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 LuxEstates. All rights reserved. | Designed with style and class.</p>
+  </div>
+</footer>
+
+<!-- ScrollReveal CDN -->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<!-- Blog Logic -->
+<script>
+  const posts = [
+    {
+        image: 'images/5.jpg',
+        title: 'Top 10 Luxury Homes in 2025',
+        desc: 'Explore the most prestigious and breathtaking homes curated for you.',
+        category: 'Luxury',
+        link: 'blog-single.html?id=blog1'
+    },
+    {
+        image: 'images/forecast.jpg',
+        title: 'Real Estate Market Forecast',
+        desc: 'Expert insights and predictions for the upcoming year.',
+        category: 'Trends',
+        link: 'blog-single.html?id=blog2'
+    },
+    {
+        image: 'images/strategy.jpg',
+        title: 'Luxury Investment Strategies',
+        desc: 'Smart ways to diversify your portfolio with high-end assets.',
+        category: 'Investment',
+        link: 'blog-single.html?id=blog3'
+    },
+    {
+        image: 'images/interior.jpg',
+        title: 'Interior Design for Mansions',
+        desc: 'Luxury interiors to make your mansion truly stand out.',
+        category: 'Design',
+        link: 'blog-single.html?id=blog4'
+    },
+    {
+        image: 'images/properties/prop1.jpg',
+        title: 'Why Location Still Wins',
+        desc: 'Unpacking the old real estate mantra for modern buyers.',
+        category: 'Tips',
+        link: 'blog-single.html?id=blog5'
+    }
+  ];
+
+  let currentIndex = 0;
+  const postsPerPage = 3;
+  const blogGrid = document.getElementById('blogGrid');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+  function loadPosts() {
+    const slice = posts.slice(currentIndex, currentIndex + postsPerPage);
+    slice.forEach(post => {
+      const blogCard = document.createElement('div');
+      blogCard.className = 'blog-card';
+
+      blogCard.innerHTML = `
+        <img src="${post.image}" alt="${post.title}" />
+        <div class="card-content">
+          <div class="category-tag">${post.category}</div>
+          <h3>${post.title}</h3>
+          <p>${post.desc}</p>
+          <a href="${post.link}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </div>
+      `;
+      blogGrid.appendChild(blogCard);
+      ScrollReveal().reveal(blogCard, { delay: 100, distance: '40px', origin: 'bottom', interval: 100 });
+    });
+
+    currentIndex += postsPerPage;
+    if (currentIndex >= posts.length) {
+      loadMoreBtn.style.display = 'none';
+    }
+  }
+
+  loadMoreBtn.addEventListener('click', loadPosts);
+  loadPosts(); // Initial load
+</script>
+
+</body>
+</html>
