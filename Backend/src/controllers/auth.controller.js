@@ -1,143 +1,202 @@
-// src/controllers/auth.controller.js
-import { User } from "../models/userModel.js";
-import { validateAndFormatPhoneNumber } from "../utils/phoneUtils.js";
+import User from "../models/user.model.js";
+import { CustomError } from "../utils/CustomError.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/generateTokens.js";
+import { sendEmail } from "../utils/sendEmail.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import crypto from "crypto";
 
-export const registerUser = async (req, res) => {
+// ==============================
+// Register User
+// ==============================
+export const register = async (req, res, next) => {
   try {
-    const { firstName, lastName, email, password, confirmPassword, contactNumber, dob } = req.body;
-
-    if (!firstName || !lastName || !email || !password || !confirmPassword || !contactNumber || !dob) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
+    const { firstName, lastName, email, password, confirmPassword, phone, dob } = req.body;
 
     if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Passwords do not match" });
+      throw new CustomError("Passwords do not match", 400);
     }
 
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
+      throw new CustomError("Email already registered", 400);
     }
 
-    const formattedPhone = validateAndFormatPhoneNumber(contactNumber);
+    const user = await User.create({ firstName, lastName, email, password, phone, dob });
 
-    const user = await User.create({
-      firstName,
-      lastName,
-      email,
-      password,
-      contactNumber: formattedPhone,
-      dob,
+    // generate verification token
+    const token = jwt.sign({ userId: user._id }, process.env.EMAIL_TOKEN_SECRET, {
+      expiresIn: "1h",
     });
 
-    return res.status(201).json({
-      message: "User registered successfully",
-      user: {
-        _id: user._id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName
-      }
+    const verificationLink = `${process.env.CLIENT_URL}/verify-email?token=${token}`;
+
+    await sendEmail({
+      to: user.email,
+      subject: "Verify your email",
+      html: `<p>Click the link to verify your email:</p><a href="${verificationLink}">${verificationLink}</a>`,
     });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
+
+    res.status(201).json({
+      message: "User registered. Please check your email to verify your account.",
+    });
+  } catch (err) {
+    next(err);
   }
 };
 
-export const loginUser = async (req, res) => {
+// ==============================
+// Verify Email
+// ==============================
+export const verifyEmail = async (req, res, next) => {
+  try {
+    const { token } = req.query;
+    const decoded = jwt.verify(token, process.env.EMAIL_TOKEN_SECRET);
+
+    const user = await User.findById(decoded.userId);
+    if (!user) throw new CustomError("User not found", 404);
+    if (user.isVerified) return res.json({ message: "Email already verified" });
+
+    user.isVerified = true;
+    await user.save();
+
+    res.json({ message: "Email verified successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ==============================
+// Resend Verification Email
+// ==============================
+export const resendVerificationEmail = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) throw new CustomError("User not found", 404);
+    if (user.isVerified) throw new CustomError("Email is already verified", 400);
+
+    const token = jwt.sign({ userId: user._id }, process.env.EMAIL_TOKEN_SECRET, {
+      expiresIn: "1h",
+    });
+
+    const verificationLink = `${process.env.CLIENT_URL}/verify-email?token=${token}`;
+
+    await sendEmail({
+      to: user.email,
+      subject: "Resend: Verify your email",
+      html: `<p>Click the link to verify your email:</p><a href="${verificationLink}">${verificationLink}</a>`,
+    });
+
+    res.json({ message: "Verification email resent" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ==============================
+// Login
+// ==============================
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user || !(await user.isPasswordCorrect(password))) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+    if (!user) throw new CustomError("Invalid email or password", 401);
 
-    const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) throw new CustomError("Invalid email or password", 401);
+
+    if (!user.isVerified) throw new CustomError("Please verify your email", 403);
+
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
     user.refreshToken = refreshToken;
     await user.save();
 
-    return res.status(200).json({ accessToken, refreshToken });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        sameSite: "Strict",
+        maxAge: 15 * 60 * 1000, // 15 mins
+      })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        sameSite: "Strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      })
+      .json({
+        message: "Login successful",
+        user: {
+          _id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role,
+          email: user.email,
+        },
+      });
+  } catch (err) {
+    next(err);
   }
 };
 
-export const logoutUser = async (req, res) => {
+// ==============================
+// Refresh Token
+// ==============================
+export const refreshAccessToken = async (req, res, next) => {
   try {
-    const user = req.user;
-    user.refreshToken = null;
-    await user.save();
-    return res.status(200).json({ message: "Logged out successfully" });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
+    const token = req.cookies?.refreshToken;
+    if (!token) throw new CustomError("No refresh token provided", 401);
 
-export const getUserProfile = (req, res) => {
-  const user = req.user;
-  return res.status(200).json({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    contactNumber: user.contactNumber,
-    dob: user.dob
-  });
-};
-
-export const updateUserProfile = async (req, res) => {
-  try {
-    const user = req.user;
-    const { firstName, lastName, contactNumber, dob } = req.body;
-
-    if (contactNumber) {
-      user.contactNumber = validateAndFormatPhoneNumber(contactNumber);
+    const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+    const user = await User.findById(decoded.userId);
+    if (!user || user.refreshToken !== token) {
+      throw new CustomError("Invalid refresh token", 403);
     }
 
-    user.firstName = firstName || user.firstName;
-    user.lastName = lastName || user.lastName;
-    user.dob = dob || user.dob;
+    const newAccessToken = generateAccessToken(user._id);
+    const newRefreshToken = generateRefreshToken(user._id);
 
+    user.refreshToken = newRefreshToken;
     await user.save();
-    return res.status(200).json({ message: "Profile updated successfully" });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
+
+    res
+      .cookie("accessToken", newAccessToken, {
+        httpOnly: true,
+        sameSite: "Strict",
+        maxAge: 15 * 60 * 1000,
+      })
+      .cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        sameSite: "Strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .json({ message: "Access token refreshed" });
+  } catch (err) {
+    next(err);
   }
 };
 
-export const updatePassword = async (req, res) => {
+// ==============================
+// Logout
+// ==============================
+export const logout = async (req, res, next) => {
   try {
-    const user = req.user;
-    const { oldPassword, newPassword } = req.body;
-
-    const isMatch = await user.isPasswordCorrect(oldPassword);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Incorrect old password" });
+    const token = req.cookies?.refreshToken;
+    if (token) {
+      const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+      const user = await User.findById(decoded.userId);
+      if (user) {
+        user.refreshToken = null;
+        await user.save();
+      }
     }
 
-    user.password = newPassword;
-    await user.save();
-
-    return res.status(200).json({ message: "Password updated successfully" });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-
-export const forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    // You would normally generate a token and send an email here
-    return res.status(200).json({ message: "Password reset link sent (mock)" });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.clearCookie("accessToken").clearCookie("refreshToken").json({
+      message: "Logged out successfully",
+    });
+  } catch (err) {
+    next(err);
   }
 };

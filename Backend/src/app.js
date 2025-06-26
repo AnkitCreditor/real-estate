@@ -1,48 +1,46 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import morgan from "morgan";
+
+// Import error middleware
+import { errorHandler } from "./middlewares/error.middleware.js";
+
+// Route imports
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
+import blogRoutes from "./routes/blog.routes.js";
+import propertyRoutes from "./routes/property.routes.js";
+import chatRoutes from "./routes/chatbot.routes.js";
 
 const app = express();
 
-// Allowed Origins for CORS
-const allowedOrigins = [
-  "http://127.0.0.1:5500",
-  "http://localhost:5500",
-  "http://127.0.0.1:5500/docs" ,
-  // Optional, include if you're serving from here
-];
+// 🛡️ CORS setup
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    credentials: true,
+  })
+);
 
-// CORS Middleware
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-}));
-
-// Body parsers
-app.use(express.json({ limit: "16kb" }));
-app.use(express.urlencoded({ extended: true, limit: "16kb" }));
-
-// Static files
-app.use(express.static("public"));
-
-// Cookie parser
+// 🔧 Global middlewares
+app.use(express.json({ limit: "20kb" }));
+app.use(express.urlencoded({ extended: true, limit: "20kb" }));
 app.use(cookieParser());
+app.use(morgan("dev")); // optional for logging requests
 
-// Routes
-app.use("/api/auth", authRoutes);
+// ✅ ❗️Removed express-fileupload to avoid conflict with multer
+// ❌ Do NOT use express-fileupload with multer
+// app.use(fileUpload({ useTempFiles: true }));
 
-// Fallback route for undefined API endpoints
-app.use("*", (req, res) => {
-  res.status(404).json({ message: "Route not found" });
-});
+// 💡 Mount routes
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/blogs", blogRoutes);
+app.use("/api/v1/properties", propertyRoutes);
+app.use("/api/v1/chat", chatRoutes);
 
-export default app;
+// ❌ Error handler
+app.use(errorHandler);
+
 export { app };

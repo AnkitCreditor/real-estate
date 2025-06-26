@@ -1,23 +1,32 @@
 import express from "express";
 import {
-  registerUser,
-  loginUser,
-  logoutUser,
-  getUserProfile,
-  updateUserProfile,
-  updatePassword,
-  forgotPassword
+  register,
+  login,
+  logout,
+  verifyEmail,
+  resendVerificationEmail,
+  refreshAccessToken
 } from "../controllers/auth.controller.js";
-import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.post("/signup", registerUser);
-router.post("/login", loginUser);
-router.post("/logout", authMiddleware, logoutUser);
-router.get("/profile", authMiddleware, getUserProfile);
-router.put("/profile", authMiddleware, updateUserProfile);
-router.put("/password", authMiddleware, updatePassword);
-router.post("/forgot-password", forgotPassword);
+// ✅ Register
+router.post("/register", register);
+
+// ✅ Verify email
+router.get("/verify-email", verifyEmail);
+
+// ✅ Resend email verification
+router.post("/resend-verification", resendVerificationEmail);
+
+// ✅ Login
+router.post("/login", login);
+
+// ✅ Logout
+router.post("/logout", isAuthenticated, logout);
+
+// ✅ Refresh token
+router.post("/refresh-token", refreshAccessToken);
 
 export default router;
