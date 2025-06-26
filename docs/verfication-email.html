@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Email Verification</title>
+  <link rel="stylesheet" href="css/verification-email.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.0/lottie.min.js"></script>
+</head>
+<body>
+  <!-- Background Bubble Animation -->
+  <div class="bubbles">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="container" id="resultContainer">
+    <!-- JS injects content here -->
+  </div>
+
+  <script>
+    const container = document.getElementById("resultContainer");
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("status");
+
+    if (status === "success") {
+      container.innerHTML = `
+        <div class="card success">
+          <div class="lottie-icon" id="successAnimation"></div>
+          <h1>Email Verified!</h1>
+          <p>Your email has been successfully verified. You may now log in to your account.</p>
+          <a href="login.html" class="btn">Go to Login</a>
+        </div>
+      `;
+      setTimeout(() => window.location.href = "login.html", 7000);
+
+      lottie.loadAnimation({
+        container: document.getElementById('successAnimation'),
+        renderer: 'svg',
+        loop: false,
+        autoplay: true,
+        path: 'https://assets7.lottiefiles.com/packages/lf20_touohxv0.json'
+      });
+    } else {
+      container.innerHTML = `
+        <div class="card failure">
+          <div class="lottie-icon" id="failAnimation"></div>
+          <h1>Verification Failed</h1>
+          <p>We couldn’t verify your email. Please try again or resend the verification link.</p>
+          <a href="signup.html" class="btn">Retry Signup</a>
+          <a href="resend-verification.html" class="btn alt">Resend Verification Email</a>
+        </div>
+      `;
+
+      lottie.loadAnimation({
+        container: document.getElementById('failAnimation'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'https://assets10.lottiefiles.com/packages/lf20_jtbfg2nb.json'
+      });
+    }
+  </script>
+</body>
+</html>
