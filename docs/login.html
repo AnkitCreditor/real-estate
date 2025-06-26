@@ -118,9 +118,9 @@
     // 🔗 BACKEND CONNECTION
     // ---------------------
 
-    const BASE_URL = "https://real-estate-h2rw.onrender.com/api/auth"; // change to your real backend URL
+    const BASE_URL = "http://localhost:8000/api/v1/auth"; // Adjust to your backend URL
 
-    // Handle login
+    // ✅ Handle login
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -147,7 +147,7 @@
       }
     });
 
-    // Handle signup
+    // ✅ Handle signup
     signupForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -165,14 +165,14 @@
       }
 
       try {
-        const res = await fetch(`${BASE_URL}/signup`, {
+        const res = await fetch(`${BASE_URL}/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             firstName,
             lastName,
             email,
-            contactNumber: phone,
+            phone,
             dob,
             password,
             confirmPassword
@@ -183,12 +183,34 @@
 
         if (!res.ok) throw new Error(data.message || "Signup failed");
 
-        alert("Signup successful! Please log in.");
+        alert("Signup successful! Please check your email to verify your account.");
         loginBtn.click();
       } catch (err) {
         alert(err.message);
       }
     });
+
+    // ✅ Email Verification Handler (check token in URL)
+    (async function verifyEmailFromToken() {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get("token");
+
+      if (token) {
+        try {
+          const res = await fetch(`${BASE_URL}/verify-email?token=${token}`);
+          const data = await res.json();
+
+          if (res.ok) {
+            alert("Email verified successfully! You can now log in.");
+            loginBtn.click();
+          } else {
+            alert(data.message || "Email verification failed.");
+          }
+        } catch (err) {
+          alert("Email verification failed.");
+        }
+      }
+    })();
   </script>
 </body>
 </html>
