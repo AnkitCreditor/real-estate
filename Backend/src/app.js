@@ -21,7 +21,7 @@ app.use(
     origin: [
       "http://localhost:5500",
       "https://real-estate-taupe-eight.vercel.app",
-      "https://yourdomain2.com", 
+      "http://127.0.0.1:5500", 
       "https://yourdomain3.com"
     ].concat(process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : []),
     credentials: true,
