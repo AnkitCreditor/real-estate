@@ -18,11 +18,15 @@ const app = express();
 // 🛡️ CORS setup
 app.use(
   cors({
-    origin:"https://real-estate-taupe-eight.vercel.app",
+    origin: [
+      "http://localhost:5500",
+      "https://real-estate-taupe-eight.vercel.app",
+      "https://yourdomain2.com", 
+      "https://yourdomain3.com"
+    ].concat(process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : []),
     credentials: true,
   })
 );
-
 // 🔧 Global middlewares
 app.use(express.json({ limit: "20kb" }));
 app.use(express.urlencoded({ extended: true, limit: "20kb" }));
