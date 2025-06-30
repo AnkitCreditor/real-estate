@@ -217,7 +217,7 @@ display: flex;
 
 .services-grid {
   padding: 100px 20px;
-  background-color: #f7f7f7;
+  background-color: #141313;
   text-align: center;
 }
 
@@ -230,8 +230,8 @@ display: flex;
 
 .services-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 50px;
 }
 
 .service-card {
@@ -456,7 +456,7 @@ display: flex;
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(255, 255, 255, 0.5); /* White overlay */
+  background: rgba(82, 82, 82, 0.5); /* White overlay */
   z-index: 1;
 }
 
@@ -473,10 +473,52 @@ display: flex;
   max-width: 1300px;
   margin: 60px auto;
   flex-wrap: wrap;
-  background-color: #fff;
+  background-color: #1e1e1e;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+/* Reflection pseudo-element */
+.feature-row::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(154, 154, 154, 0.4) 50%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  transform: skewX(-25deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* On hover, animate the reflection */
+.feature-row:hover::after {
+  animation: reflectMove 1s ease-out forwards;
+  opacity: 1;
+}
+
+@keyframes reflectMove {
+  0% {
+    left: -75%;
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 125%;
+    opacity: 1;
+  }
 }
 
 .feature-row.reverse {
@@ -506,7 +548,7 @@ display: flex;
 
 .feature-text h3 {
   font-size: 30px;
-  color: #b2965c; /* Goldish tone */
+  color: #d4af37; /* Goldish tone */
   margin-bottom: 20px;
   font-weight: 700;
 }
@@ -514,7 +556,7 @@ display: flex;
 .feature-text p {
   font-size: 16px;
   line-height: 1.8;
-  color: #444;
+  color: #f6f6f6;
 }
 
 /* Responsive */
