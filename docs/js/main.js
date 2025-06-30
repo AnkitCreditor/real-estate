@@ -31,7 +31,7 @@ const sections = document.querySelectorAll('.section-animate');
     navLinks.classList.toggle('show');
   });
 
-  let step = 0;
+let step = 0;
 let userResponses = {};
 let userNeed = ""; // buy / rent / sell
 

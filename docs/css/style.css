@@ -299,25 +299,37 @@ body {
 }
 
 /* Section Headings */
-.section-title,
-.section-subtitle {
-  position: relative;
-  z-index: 1;
-}
 
-.section-title {
-  text-align: center;
-  font-size: 36px;
-  margin-bottom: 10px;
+.section-badge {
+  display: inline-block;
+  background: #d4af37;
   color: #111;
-  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
 }
 
-.section-subtitle {
-  text-align: center;
+.section-title-featured {
+  font-size: 36px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.section-subtitle-featured {
   font-size: 16px;
-  color: #777;
-  margin-bottom: 50px;
+  color: #f8f8f8;
+  margin-bottom: 0;
+}
+
+.section-underline {
+  width: 60px;
+  height: 3px;
+  background: #d4af37;
+  margin: 20px auto;
+  border-radius: 10px;
 }
 
 /* Grid Layout */
@@ -327,6 +339,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 30px;
+  margin-top: 50px;
   padding: 0 20px;
 }
 
@@ -930,7 +943,7 @@ body {
 /* === Featured Properties Section === */
 .featured-properties {
   padding: 100px 0;
-  background: #fff;
+  background: #222121;
 }
 
 .section-header.center {
@@ -949,15 +962,15 @@ body {
   margin-bottom: 10px;
 }
 
-.section-title {
+.section-title-featured {
   font-size: 36px;
-  color: #111;
+  color: #ffffff;
   margin-bottom: 10px;
 }
 
-.section-subtitle {
+.section-subtitle-featured {
   font-size: 16px;
-  color: #777;
+  color: #f8f8f8;
   margin-bottom: 0;
 }
 
