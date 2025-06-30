@@ -258,3 +258,35 @@ input::placeholder {
     padding: 30px 20px;
   }
 }
+.oauth-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.google-btn {
+  background: #fff;
+  color: #444;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  transition: background 0.3s ease;
+
+}
+
+.google-btn:hover {
+  background: #f1f1f1;
+}
+
+.google-btn img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}

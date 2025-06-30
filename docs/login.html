@@ -30,6 +30,15 @@
           <input type="password" id="loginPassword" placeholder="Password" required />
           <div class="forgot">Forgot Password?</div>
           <button type="submit" class="animated-btn">Login</button>
+
+          <!-- Google OAuth -->
+          <div class="oauth-container">
+            <button type="button" class="google-btn" onclick="handleGoogleOAuth()">
+              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" />
+              Continue with Google
+            </button>
+          </div>
+
           <p class="switch-msg">Don't have an account? <span id="toSignup">Signup</span></p>
         </form>
 
@@ -49,6 +58,15 @@
           <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
           <p id="passwordMsg"></p>
           <button type="submit" class="animated-btn">Signup</button>
+
+          <!-- Google OAuth for Signup -->
+          <div class="oauth-container">
+            <button type="button" class="google-btn" onclick="handleGoogleOAuth()">
+              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" />
+              Continue with Google
+            </button>
+          </div>
+
           <p class="switch-msg">Already have an account? <span id="toLogin">Login</span></p>
         </form>
       </div>
@@ -65,6 +83,7 @@
     const slogan = document.getElementById('slogan');
     const passwordInput = document.getElementById('signupPassword');
     const passwordMsg = document.getElementById('passwordMsg');
+    const BASE_URL = "https://real-estate-nu1t.onrender.com/api/v1/auth";
 
     const slogans = [
       "Empowering Private Commerce...",
@@ -72,13 +91,11 @@
       "Secure, Smart, Private..."
     ];
 
-    let sloganIndex = 0;
-    let charIndex = 0;
+    let sloganIndex = 0, charIndex = 0;
 
     function typeSlogan() {
       if (charIndex < slogans[sloganIndex].length) {
-        slogan.textContent += slogans[sloganIndex].charAt(charIndex);
-        charIndex++;
+        slogan.textContent += slogans[sloganIndex].charAt(charIndex++);
         setTimeout(typeSlogan, 100);
       } else {
         setTimeout(() => {
@@ -91,22 +108,22 @@
     }
     typeSlogan();
 
-    loginBtn.addEventListener('click', () => {
+    loginBtn.onclick = () => {
       loginBtn.classList.add('active');
       signupBtn.classList.remove('active');
       loginForm.classList.add('active-form');
       signupForm.classList.remove('active-form');
-    });
+    };
 
-    signupBtn.addEventListener('click', () => {
+    signupBtn.onclick = () => {
       signupBtn.classList.add('active');
       loginBtn.classList.remove('active');
       signupForm.classList.add('active-form');
       loginForm.classList.remove('active-form');
-    });
+    };
 
-    toSignup.addEventListener('click', () => signupBtn.click());
-    toLogin.addEventListener('click', () => loginBtn.click());
+    toSignup.onclick = () => signupBtn.click();
+    toLogin.onclick = () => loginBtn.click();
 
     passwordInput?.addEventListener('input', () => {
       const value = passwordInput.value;
@@ -114,16 +131,8 @@
       passwordMsg.textContent = isStrong ? '' : "Password must be at least 8 characters, include upper, lower, number & symbol.";
     });
 
-    // ---------------------
-    // 🔗 BACKEND CONNECTION
-    // ---------------------
-
-    const BASE_URL = "https://real-estate-nu1t.onrender.com/api/v1/auth"; // Adjust to your backend URL
-
-    // ✅ Handle login
-    loginForm.addEventListener("submit", async (e) => {
+    loginForm.onsubmit = async (e) => {
       e.preventDefault();
-
       const email = document.getElementById("loginEmail").value;
       const password = document.getElementById("loginPassword").value;
 
@@ -135,22 +144,18 @@
         });
 
         const data = await res.json();
-
         if (!res.ok) throw new Error(data.message || "Login failed");
 
-        // Save token & redirect
         localStorage.setItem("token", data.token);
         alert("Login successful!");
-        window.location.href = "dashboard_admin.html"; // or your actual dashboard
+        window.location.href = "dashboard_admin.html";
       } catch (err) {
         alert(err.message);
       }
-    });
+    };
 
-    // ✅ Handle signup
-    signupForm.addEventListener("submit", async (e) => {
+    signupForm.onsubmit = async (e) => {
       e.preventDefault();
-
       const firstName = document.getElementById("firstName").value;
       const lastName = document.getElementById("lastName").value;
       const email = document.getElementById("signupEmail").value;
@@ -169,28 +174,24 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            firstName,
-            lastName,
-            email,
-            phone,
-            dob,
-            password,
-            confirmPassword
+            firstName, lastName, email, phone, dob, password, confirmPassword
           })
         });
 
         const data = await res.json();
-
         if (!res.ok) throw new Error(data.message || "Signup failed");
 
-        alert("Signup successful! Please check your email to verify your account.");
+        alert("Signup successful! Check your email to verify your account.");
         loginBtn.click();
       } catch (err) {
         alert(err.message);
       }
-    });
+    };
 
-    // ✅ Email Verification Handler (check token in URL)
+    function handleGoogleOAuth() {
+      window.location.href = `${BASE_URL}/google`;
+    }
+
     (async function verifyEmailFromToken() {
       const params = new URLSearchParams(window.location.search);
       const token = params.get("token");
@@ -199,14 +200,13 @@
         try {
           const res = await fetch(`${BASE_URL}/verify-email?token=${token}`);
           const data = await res.json();
-
           if (res.ok) {
-            alert("Email verified successfully! You can now log in.");
+            alert("Email verified successfully!");
             loginBtn.click();
           } else {
             alert(data.message || "Email verification failed.");
           }
-        } catch (err) {
+        } catch {
           alert("Email verification failed.");
         }
       }
